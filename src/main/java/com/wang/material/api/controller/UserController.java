@@ -21,11 +21,11 @@ import javax.validation.Valid;
  */
 @Api(value = "用户管理", tags = "用户管理")
 @RestController
-@RequestMapping("/electronicManual/manage")
+@RequestMapping("/user/manage")
 public class UserController
 {
 
-    @ApiOperation("获取电子手册列表(运营使用)")
+    @ApiOperation("创建用户")
 
     @PostMapping("/Create")
     public ElectronicManualVO getElectronicManualList(@RequestBody @Valid String query) {
