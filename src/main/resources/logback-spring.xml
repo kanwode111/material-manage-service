@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!--本文主要输出日志为控制台日志，系统日志，sql日志，异常日志-->
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->
+    <!--控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %p (%file:%line\)- %m%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="fileLog"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/file/fileLog.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/file/fileLog.log.%d.%i</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 64 MB -->
+                <maxFileSize>64 MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d %p (%file:%line\)- %m%n
+            </pattern>
+            <charset>UTF-8</charset>
+            <!-- 此处设置字符集 -->
+        </encoder>
+    </appender>
+
+    <!--sql日志-->
+    <appender name="sqlFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/sql/sqlFile.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/sql/sqlFile.log.%d.%i</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 64 MB -->
+                <maxFileSize>64 MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!--对记录事件进行格式化。负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流。-->
+        <encoder>
+            <!--用来设置日志的输入格式-->
+            <pattern>
+                %d %p (%file:%line\)- %m%n
+            </pattern>
+            <charset>UTF-8</charset>
+            <!-- 此处设置字符集 -->
+        </encoder>
+    </appender>
+
+
+    <!--异常日志-->
+    <appender name="errorFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/error/errorFile.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/error/errorFile.%d.log.%i</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 64 MB -->
+                <maxFileSize>64 MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <!--对记录事件进行格式化。负责两件事，一是把日志信息转换成字节数组，二是把字节数组写入到输出流。-->
+        <encoder>
+            <!--用来设置日志的输入格式-->
+            <pattern>
+                %d %p (%file:%line\)- %m%n
+            </pattern>
+            <charset>UTF-8</charset>
+            <!-- 此处设置字符集 -->
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="fileLog" />
+        <appender-ref ref="console" />
+        <appender-ref ref="errorFile" />
+    </root>
+
+    <!--打印sql至sqlFile文件日志-->
+    <logger name="com.springboot.demo.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="console" />
+        <appender-ref ref="sqlFile" />
+    </logger>
+</configuration>
