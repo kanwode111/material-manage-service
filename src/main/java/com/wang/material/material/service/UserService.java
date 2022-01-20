@@ -1,5 +1,9 @@
 package com.wang.material.material.service;
 
+import com.wang.material.material.entity.UserEntity;
+
+import java.util.List;
+
 /**
  * @description: TODO
  * @author
@@ -8,6 +12,10 @@ package com.wang.material.material.service;
  */
 
 public interface UserService {
+
+    void createUser(UserEntity user);
+
+    List<UserEntity> getAllUsers();
 
     void test() ;
 }
