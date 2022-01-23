@@ -42,8 +42,10 @@ public class UserController {
 
     @ApiOperation("查询所有用户")
     @PostMapping("/getAllUser")
-    public List<UserVO> getElectronicManualList() {
-        return null;
+    public List<UserEntity> getElectronicManualList() {
+
+
+        return userService.getAllUsers();
     }
 
 

@@ -12,7 +12,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-@TableName("material_user")
+@TableName("user")
 public class UserEntity extends BaseEntity{
     @ApiModelProperty("用户名")
     private String username;

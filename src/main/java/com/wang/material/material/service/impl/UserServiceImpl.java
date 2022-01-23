@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllUsers() {
-        return userMapper.selectList(new QueryWrapper<>());
+        List<UserEntity> users = userMapper.selectList(new QueryWrapper<>());
+        return users;
     }
 
     @Override
