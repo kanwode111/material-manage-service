@@ -11,8 +11,8 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-@TableName("formula_step")
-public class FormulaStepEntity extends BaseEntity{
+@TableName("formula_part")
+public class FormulaPartEntity extends BaseEntity{
 
     @ApiModelProperty("配方步骤编码")
     private String formulaStepCode;

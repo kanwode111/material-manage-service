@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @description: 配方步骤实体类
+ * @description: 配方明细实体类
  * @author
  * @date 2022/1/20 17:03
  * @version 1.0

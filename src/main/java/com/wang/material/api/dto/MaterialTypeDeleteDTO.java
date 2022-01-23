@@ -1,11 +1,7 @@
 package com.wang.material.api.dto;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * @description: TODO
@@ -14,9 +10,8 @@ import java.util.List;
  * @version 1.0
  */
 @Data
-@ApiModel("用户删除")
-public class UserDeleteDTO extends DeleteDTO{
-
+@ApiModel("原材料类型删除")
+public class MaterialTypeDeleteDTO extends DeleteDTO{
 
 
 

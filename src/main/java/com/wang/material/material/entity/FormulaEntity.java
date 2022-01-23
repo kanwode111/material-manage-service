@@ -14,7 +14,8 @@ import lombok.Data;
 @Data
 @TableName("formula")
 public class FormulaEntity extends BaseEntity{
-    @ApiModelProperty("配方编码")
+
+    @ApiModelProperty("配方编码，唯一不可变，同一配方的多个版本code相同")
     private String formulaCode;
 
     @ApiModelProperty("配方名称")

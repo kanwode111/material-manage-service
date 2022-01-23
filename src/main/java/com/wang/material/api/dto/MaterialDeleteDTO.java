@@ -14,16 +14,8 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel("原材料删除")
-public class MaterialDeleteDTO {
+public class MaterialDeleteDTO extends DeleteDTO{
 
-    @ApiModelProperty(value = "原材料Id", name = "id", dataType = "Long", required = false)
-    private Long id;
-
-
-
-    @ApiModelProperty(value = "创建人", name = "createBy", dataType = "String", required = true)
-    @NotNull
-    private String createBy;
 
 
 }
