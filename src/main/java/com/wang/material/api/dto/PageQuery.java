@@ -8,7 +8,7 @@ import javax.validation.constraints.Min;
 
 /**
  * @description: 分页查询通用参数
- * @author liuniu
+ * @author
  * @date 2021/12/21 16:57
  * @version 1.0
  */

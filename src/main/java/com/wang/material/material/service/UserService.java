@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void createUser(UserEntity user);
+    Integer createUser(UserEntity user);
 
     List<UserEntity> getAllUsers();
 

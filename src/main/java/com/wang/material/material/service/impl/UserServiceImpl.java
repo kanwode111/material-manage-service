@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public void createUser(UserEntity user) {
-        userMapper.insert(user);
+    public Integer createUser(UserEntity user) {
+        return userMapper.insert(user);
 
     }
 

@@ -1,6 +1,5 @@
 package com.wang.material.api.dto;
 
-import com.wang.material.material.entity.BaseEntity;
 import com.wang.material.material.enums.RoleEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,7 +15,10 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @ApiModel("用户创建")
-public class UserCreateDTO extends BaseEntity {
+public class UserCreateDTO  {
+
+    @ApiModelProperty(value = "用户Id", name = "id", dataType = "Long", required = false)
+    private Long id;
     @ApiModelProperty(value = "用户名", name = "username", dataType = "String", required = true)
     @NotNull
     private String username;
@@ -37,7 +39,7 @@ public class UserCreateDTO extends BaseEntity {
     @NotNull
     private RoleEnum role;
 
-    @ApiModelProperty(value = "创建人", name = "createBy", dataType = "RoleEnum", required = true)
+    @ApiModelProperty(value = "创建人", name = "createBy", dataType = "String", required = true)
     @NotNull
     private String createBy;
 

@@ -26,5 +26,6 @@ public class UserFormulaRecordEntity extends BaseEntity{
     @ApiModelProperty("材料重量")
     private Long materialWeight;
 
-
+    @ApiModelProperty("配方版本号，当配方修改后，配方版本号+1，同一父配方下的所有子配置版本号也+1")
+    private Integer formulaVersion;
 }

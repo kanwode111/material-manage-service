@@ -32,4 +32,10 @@ public class FormulaEntity extends BaseEntity{
     @ApiModelProperty("所属配置")
     private Long parentId;
 
+    @ApiModelProperty("配方版本号，当配方修改后，配方版本号+1，同一父配方下的所有子配置版本号也+1")
+    private Integer version;
+
+    @ApiModelProperty("配方是否上线，只有最新版本号的配方是上线状态的，其它")
+    private Boolean onlineStatus;
+
 }
