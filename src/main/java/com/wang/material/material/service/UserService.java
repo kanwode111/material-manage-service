@@ -36,5 +36,19 @@ public interface UserService {
      */
     Integer updatePassword(UserEntity user);
 
+    /**
+     * 删除用户
+     * @param user
+     * @return
+     */
+    Integer deleteUser(UserEntity user);
+
+    /**
+     * 校验用户是否为管理员，如果为非管理员抛出异常
+     * @param username
+     * @return
+     */
+    void isAdmin(String username);
+
 }
 

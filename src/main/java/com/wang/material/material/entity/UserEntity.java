@@ -29,5 +29,4 @@ public class UserEntity extends BaseEntity{
     @ApiModelProperty("角色")
     private RoleEnum role;
 
-
 }

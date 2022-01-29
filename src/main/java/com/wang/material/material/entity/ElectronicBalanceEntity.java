@@ -12,7 +12,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-@TableName("user")
+@TableName("electronic_balance")
 public class ElectronicBalanceEntity extends BaseEntity{
     @ApiModelProperty("电子称名称")
     private String name;
