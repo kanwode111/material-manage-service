@@ -15,10 +15,11 @@ import lombok.Data;
 public class FormulaPartEntity extends BaseEntity{
 
     @ApiModelProperty("配方步骤编码")
-    private String formulaStepCode;
+    private String formulaPartCode;
 
     @ApiModelProperty("配方步骤名称")
-    private String formulaStepName;
+    private String formulaPartName;
 
-
+    @ApiModelProperty("电子称ID")
+    private Long electronicBalanceId;
 }

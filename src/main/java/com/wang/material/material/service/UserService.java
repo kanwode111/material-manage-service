@@ -1,5 +1,7 @@
 package com.wang.material.material.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wang.material.api.vo.UserVO;
 import com.wang.material.material.entity.UserEntity;
 
 import java.util.List;
@@ -13,9 +15,26 @@ import java.util.List;
 
 public interface UserService {
 
-    Integer createUser(UserEntity user);
+    /**
+     * 创建用户
+     * @param user
+     * @return
+     */
+    Long createUser(UserEntity user);
 
-    List<UserEntity> getAllUsers();
+    /**
+     * 分页查询所有用户
+     * @param page
+     * @return
+     */
+    IPage<UserVO> getAllUsers(IPage<UserEntity> page);
 
-    void test() ;
+    /**
+     * 修改用户密码，需要校验用户权限
+     * @param user
+     * @return
+     */
+    Integer updatePassword(UserEntity user);
+
 }
+

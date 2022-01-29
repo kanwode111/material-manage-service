@@ -29,6 +29,9 @@ public class FormulaDetailEntity extends BaseEntity{
     @ApiModelProperty("下限位（最小值）")
     private Double lowerLimit;
 
+    @ApiModelProperty("优先级顺序")
+    private Integer priorityIndex;
+
 
 
 }

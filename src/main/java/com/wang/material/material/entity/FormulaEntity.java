@@ -28,7 +28,7 @@ public class FormulaEntity extends BaseEntity{
     private Double totalWeight;
 
     @ApiModelProperty("配方步骤")
-    private Long formulaStepId;
+    private Long formulaPartId;
 
     @ApiModelProperty("所属配置")
     private Long parentId;
