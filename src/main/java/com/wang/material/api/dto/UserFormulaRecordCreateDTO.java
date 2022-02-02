@@ -13,8 +13,6 @@ import lombok.Data;
 @Data
 @ApiModel("用户配方记录")
 public class UserFormulaRecordCreateDTO {
-    @ApiModelProperty(value = "用户Id", name = "id", dataType = "Long",  required = false)
-    private Long id;
 
     @ApiModelProperty(value = "配方Id", name = "formulaId", dataType = "Long",  required = true)
     private Long formulaId;

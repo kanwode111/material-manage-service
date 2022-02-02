@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.wang.material.material.entity.FormulaDetailEntity">
+<mapper namespace="com.wang.material.material.mapper.FormulaMapper">
 
     <sql id="BaseColumn">
         id, formula_name,formula_code,description,total_weight,parent_id,formula_part_id,version, online_status,update_by,update_date,deleted,create_by,create_date
