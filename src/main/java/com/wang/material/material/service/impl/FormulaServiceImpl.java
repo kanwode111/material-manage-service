@@ -13,6 +13,7 @@ import com.wang.material.material.service.MaterialService;
 import com.wang.material.material.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -21,9 +22,6 @@ import java.util.List;
 
 @Service
 public class FormulaServiceImpl implements FormulaService {
-
-    @Resource
-    private MaterialMapper materialMapper;
 
     @Autowired
     private UserService userService;
@@ -36,6 +34,7 @@ public class FormulaServiceImpl implements FormulaService {
 
 
     @Override
+    @Transactional
     public Long updateFormula(FormulaEntity formula) {
         userService.isAdmin(formula.getUpdateBy());
         //修改的时候增加了版本号之后即为添加了一条新的记录，原有配方为下线状态，新插入的为在线状态
@@ -58,6 +57,7 @@ public class FormulaServiceImpl implements FormulaService {
 
 
     @Override
+    @Transactional
     public Long createFormula(FormulaEntity formula) {
         userService.isAdmin(formula.getUpdateBy());
         FormulaEntity dbFormula = formulaMapper.selectById(formula.getId());
@@ -95,7 +95,15 @@ public class FormulaServiceImpl implements FormulaService {
     }
 
     @Override
+    @Transactional
     public Integer deleteFormula(FormulaEntity formula) {
-        return null;
+        Integer result = formulaMapper.deleteById(formula.getId());
+        QueryWrapper formulaQuery = new QueryWrapper();
+        formulaQuery.eq("parent_id", formula.getId());
+        formulaMapper.delete(formulaQuery);
+        QueryWrapper detailQuery = new QueryWrapper();
+        detailQuery.eq("formula_id", formula.getId());
+        formulaDetailMapper.delete(detailQuery);
+        return result;
     }
 }

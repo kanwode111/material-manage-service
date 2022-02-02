@@ -2,11 +2,7 @@ package com.wang.material.api.controller;
 
 import com.wang.material.api.common.BaseOperationPlatformController;
 import com.wang.material.api.dto.MaterialCreateDTO;
-import com.wang.material.api.dto.MaterialDeleteDTO;
-import com.wang.material.api.dto.UserCreateDTO;
 import com.wang.material.material.entity.MaterialEntity;
-import com.wang.material.material.entity.MaterialTypeEntity;
-import com.wang.material.material.entity.UserEntity;
 import com.wang.material.material.service.MaterialService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 /**
  * @description: 原材料管理
