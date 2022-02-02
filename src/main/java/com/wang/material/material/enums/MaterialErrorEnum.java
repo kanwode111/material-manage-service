@@ -16,6 +16,7 @@ public enum MaterialErrorEnum implements IError {
 	CANNOT_DELETE_MATERIAL	("7000005", "不能删除原材料，原材料在配方中有使用"),
 	CANNOT_DELETE_MATERIAL_TYPE	("7000006", "不能删除原材料类型，原材料类型下面存在原材料"),
 	FORMULA_NAME_CODE_EXIST	("7000007", "配方名称已经存在"),
+	CANNOT_DELETE_FORMULA_PART	("7000008", "不能删除配方步骤，配方步骤下面含有配方"),
 	;
 	private String errorCode;
 
