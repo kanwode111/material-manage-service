@@ -1,16 +1,21 @@
 package com.wang.material.api.controller;
 
+import com.wang.material.api.common.BaseOperationPlatformController;
 import com.wang.material.api.dto.MaterialCreateDTO;
 import com.wang.material.api.dto.MaterialDeleteDTO;
 import com.wang.material.api.dto.UserCreateDTO;
+import com.wang.material.material.entity.MaterialEntity;
+import com.wang.material.material.entity.MaterialTypeEntity;
 import com.wang.material.material.entity.UserEntity;
+import com.wang.material.material.service.MaterialService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -24,20 +29,39 @@ import javax.validation.constraints.NotNull;
 @Api(value = "原材料管理", tags = "原材料管理")
 @RestController
 @RequestMapping("/material/manage")
-public class MaterialController {
+public class MaterialController extends BaseOperationPlatformController {
+
+    @Autowired
+    private MaterialService materialService;
 
     @ApiOperation("新增/修改原材料")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "operator", value = "操作人", paramType = "header", required = true),
+    })
     @PostMapping("/create")
-    public Integer create(@RequestBody @Valid MaterialCreateDTO material) {
+    public ResponseEntity<Long> create(@RequestBody @Valid MaterialCreateDTO material) {
         // 校验原材料是否存在
-        return 1;
+        MaterialEntity saveMaterial = new MaterialEntity();
+        BeanUtils.copyProperties(material, saveMaterial);
+        if (material.getId() == null) {
+            saveMaterial.setCreateBy(getOperator());
+        }
+        saveMaterial.setUpdateBy(getOperator());
+        Long id = materialService.createMaterial(saveMaterial);
+        return ResponseEntity.ok(id);
     }
 
     @ApiOperation("删除原材料")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "operator", value = "操作人", paramType = "header", required = true),
+    })
     @PostMapping("/delete")
-    public Integer deleteMaterial(@RequestBody @Valid MaterialDeleteDTO material) {
-        // 校验原材料是否存在
+    public ResponseEntity<Integer> deleteMaterial(@RequestParam @Valid Long id) {
+        MaterialEntity material = new MaterialEntity();
+        material.setMaterialTypeId(id);
+        material.setUpdateBy(getOperator());
+        Integer result = materialService.deleteMaterial(material);
         // 校验原材料是否在配方中有使用，且配方为上线状态
-        return 1;
+        return ResponseEntity.ok(result);
     }
 }

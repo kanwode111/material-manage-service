@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.material.material.entity.FormulaDetailEntity">
+
+    <sql id="BaseColumn">
+        id, formula_id,material_id,material_weight,upper_limit,lower_limit,priority_index,update_by,update_date,deleted,create_by,create_date
+    </sql>
+
+    <insert id="batchInsert">
+        insert into formula_detail(formula_id,material_id,material_weight,upper_limit,lower_limit,priority_index,update_by,update_date,deleted,create_by,create_date)
+        values
+        <foreach collection="details" item="item" open="(" close=")" separator=",">
+            #{item.formulaId}, #{item.materialId}, #{item.materialWeight}, #{item.upperLimit}, #{item.lowerLimit}, #{item.priorityIndex}, #{item.updateBy}, now(), 0, #{item.createBy}, now()
+        </foreach>
+    </insert>
+
+
+</mapper>

@@ -13,6 +13,9 @@ public enum MaterialErrorEnum implements IError {
 	OPERATOR_NOT_EMPTY	("7000002", "操作人不能为空"),
 	CANNOT_UPDATE_PASSWORD	("7000003", "非管理员用户只能修改自己密码"),
 	CANNOT_DELETE_USER	("7000004", "非管理员用户不能删除用户"),
+	CANNOT_DELETE_MATERIAL	("7000005", "不能删除原材料，原材料在配方中有使用"),
+	CANNOT_DELETE_MATERIAL_TYPE	("7000006", "不能删除原材料类型，原材料类型下面存在原材料"),
+	FORMULA_NAME_CODE_EXIST	("7000007", "配方名称已经存在"),
 	;
 	private String errorCode;
 

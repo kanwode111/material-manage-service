@@ -5,6 +5,8 @@ import com.wang.material.material.enums.RoleEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @description: 配方实体类
  * @author
@@ -38,5 +40,11 @@ public class FormulaEntity extends BaseEntity{
 
     @ApiModelProperty("配方是否上线，只有最新版本号的配方是上线状态的，其它")
     private Boolean onlineStatus;
+
+    @ApiModelProperty("配方明细")
+    private List<FormulaDetailEntity> detailList;
+
+    @ApiModelProperty("配方下子配方")
+    private List<FormulaEntity> childFormulas;
 
 }
