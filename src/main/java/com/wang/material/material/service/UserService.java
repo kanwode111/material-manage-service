@@ -1,6 +1,7 @@
 package com.wang.material.material.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wang.material.api.dto.UserQuery;
 import com.wang.material.api.vo.UserVO;
 import com.wang.material.material.entity.UserEntity;
 
@@ -27,7 +28,7 @@ public interface UserService {
      * @param page
      * @return
      */
-    IPage<UserVO> getAllUsers(IPage<UserEntity> page);
+    IPage<UserVO> getAllUsers(IPage<UserEntity> page, UserQuery query);
 
     /**
      * 修改用户密码，需要校验用户权限

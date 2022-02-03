@@ -1,6 +1,11 @@
 package com.wang.material.material.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wang.material.api.dto.ElectronicBalanceQuery;
+import com.wang.material.api.vo.ElectronicBalanceVO;
+import com.wang.material.api.vo.UserVO;
 import com.wang.material.material.entity.ElectronicBalanceEntity;
+import com.wang.material.material.entity.UserEntity;
 
 public interface ElectronicBalanceService {
     /**
@@ -17,4 +22,12 @@ public interface ElectronicBalanceService {
      * @return
      */
     Integer deleteElectronicBalance(ElectronicBalanceEntity electronicBalanceEntity);
+
+    /**
+     * 分页查询电子称
+     * @param page
+     * @return
+     */
+    IPage<ElectronicBalanceVO> getElectronics(IPage<ElectronicBalanceEntity> page, ElectronicBalanceQuery query);
+
 }

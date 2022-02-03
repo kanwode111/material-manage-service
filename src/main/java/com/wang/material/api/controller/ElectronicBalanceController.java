@@ -1,12 +1,16 @@
 package com.wang.material.api.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wang.material.api.common.BaseOperationPlatformController;
 import com.wang.material.api.dto.ElectronicBalanceCreateDTO;
-import com.wang.material.api.dto.MaterialCreateDTO;
+import com.wang.material.api.dto.ElectronicBalanceQuery;
+import com.wang.material.api.dto.PageQuery;
+import com.wang.material.api.vo.ElectronicBalanceVO;
+import com.wang.material.api.vo.UserVO;
 import com.wang.material.material.entity.ElectronicBalanceEntity;
-import com.wang.material.material.entity.MaterialEntity;
+import com.wang.material.material.entity.UserEntity;
 import com.wang.material.material.service.ElectronicBalanceService;
-import com.wang.material.material.service.MaterialService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -62,4 +66,15 @@ public class ElectronicBalanceController extends BaseOperationPlatformController
         // 校验原材料是否在配方中有使用，且配方为上线状态
         return ResponseEntity.ok(result);
     }
+
+    @ApiOperation("查询电子称")
+    @PostMapping("/getElectronics")
+    public ResponseEntity<IPage<ElectronicBalanceVO>> getAllUser(@RequestBody ElectronicBalanceQuery query) {
+        Page<ElectronicBalanceEntity> page = new Page<>(query.getPageNumber(), query.getPageSize());
+        ElectronicBalanceEntity balance = new ElectronicBalanceEntity();
+        IPage<ElectronicBalanceVO> iPage = electronicBalanceService.getElectronics(page, query);
+
+        return ResponseEntity.ok(iPage);
+    }
+
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wang.material.api.common.BaseOperationPlatformController;
 import com.wang.material.api.dto.PageQuery;
 import com.wang.material.api.dto.UserCreateDTO;
+import com.wang.material.api.dto.UserQuery;
 import com.wang.material.api.dto.UserUpdatePasswordDTO;
 import com.wang.material.api.vo.UserVO;
 import com.wang.material.material.entity.UserEntity;
@@ -53,11 +54,9 @@ public class UserController extends BaseOperationPlatformController {
 
     @ApiOperation("查询所有用户")
     @PostMapping("/getAllUser")
-    public ResponseEntity<IPage<UserVO>> getAllUser(@RequestBody PageQuery query) {
+    public ResponseEntity<IPage<UserVO>> getAllUser(@RequestBody @Valid UserQuery query) {
         Page<UserEntity> page = new Page<>(query.getPageNumber(), query.getPageSize());
-        UserEntity user = new UserEntity();
-        BeanUtils.copyProperties(query, user);
-        IPage<UserVO> iPage = userService.getAllUsers(page);
+        IPage<UserVO> iPage = userService.getAllUsers(page, query);
 
         return ResponseEntity.ok(iPage);
     }

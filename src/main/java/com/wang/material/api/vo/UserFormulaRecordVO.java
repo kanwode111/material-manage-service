@@ -1,18 +1,28 @@
-package com.wang.material.material.entity;
+package com.wang.material.api.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.wang.material.material.entity.FormulaDetailEntity;
+import com.wang.material.material.entity.FormulaEntity;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
- * @description: 配方实体类
+ * @description: 电子手册类
  * @author
- * @date 2022/1/20 17:03
+ * @date 2022/1/18 13:25
  * @version 1.0
  */
 @Data
-@TableName("user_formula_record")
-public class UserFormulaRecordEntity extends BaseEntity{
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ApiModel("用户配料记录返回VO")
+public class UserFormulaRecordVO  extends BaseVO{
 
     @ApiModelProperty("配方ID")
     private Long formulaId;

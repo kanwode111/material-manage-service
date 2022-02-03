@@ -1,9 +1,12 @@
 package com.wang.material.api.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wang.material.api.common.BaseOperationPlatformController;
-import com.wang.material.api.dto.FormulaCreateDTO;
-import com.wang.material.api.dto.MaterialCreateDTO;
-import com.wang.material.api.dto.MaterialDeleteDTO;
+import com.wang.material.api.dto.*;
+import com.wang.material.api.vo.ElectronicBalanceVO;
+import com.wang.material.api.vo.FormulaVO;
+import com.wang.material.material.entity.ElectronicBalanceEntity;
 import com.wang.material.material.entity.FormulaDetailEntity;
 import com.wang.material.material.entity.FormulaEntity;
 import com.wang.material.material.entity.MaterialEntity;
@@ -86,5 +89,15 @@ public class FormulaController extends BaseOperationPlatformController {
         formula.setUpdateBy(getOperator());
         formula.setId(id);
         return ResponseEntity.ok(formulaService.deleteFormula(formula));
+    }
+
+
+    @ApiOperation("查询配方")
+    @PostMapping("/getFormulas")
+    public ResponseEntity<IPage<FormulaVO>> getAllUser(@RequestBody @Valid FormulaQuery query) {
+        Page<FormulaEntity> page = new Page<>(query.getPageNumber(), query.getPageSize());
+        IPage<FormulaVO> iPage = formulaService.getFormulas(page, query);
+
+        return ResponseEntity.ok(iPage);
     }
 }

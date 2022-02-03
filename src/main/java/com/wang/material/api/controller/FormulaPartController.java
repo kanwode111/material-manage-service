@@ -1,10 +1,7 @@
 package com.wang.material.api.controller;
 
 import com.wang.material.api.common.BaseOperationPlatformController;
-import com.wang.material.api.dto.FormulaCreateDTO;
 import com.wang.material.api.dto.FormulaPartCreateDTO;
-import com.wang.material.api.dto.MaterialCreateDTO;
-import com.wang.material.material.entity.FormulaEntity;
 import com.wang.material.material.entity.FormulaPartEntity;
 import com.wang.material.material.service.FormulaPartService;
 import io.swagger.annotations.Api;

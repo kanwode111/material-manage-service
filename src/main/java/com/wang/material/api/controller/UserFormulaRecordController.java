@@ -1,9 +1,11 @@
 package com.wang.material.api.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wang.material.api.common.BaseOperationPlatformController;
-import com.wang.material.api.dto.ElectronicBalanceCreateDTO;
 import com.wang.material.api.dto.UserFormulaRecordCreateDTO;
-import com.wang.material.material.entity.ElectronicBalanceEntity;
+import com.wang.material.api.dto.UserFormulaRecordQuery;
+import com.wang.material.api.vo.UserFormulaRecordVO;
 import com.wang.material.material.entity.UserFormulaRecordEntity;
 import com.wang.material.material.service.UserFormulaRecordService;
 import io.swagger.annotations.Api;
@@ -13,7 +15,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -43,6 +48,15 @@ public class UserFormulaRecordController extends BaseOperationPlatformController
         record.setUpdateBy(getOperator());
         Long id = userFormulaRecordService.createUserFormulaRecord(record);
         return ResponseEntity.ok(id);
+    }
+
+    @ApiOperation("查询配方")
+    @PostMapping("/getUserFormulaRecords")
+    public ResponseEntity<IPage<UserFormulaRecordVO>> getUserFormulaRecords(@RequestBody @Valid UserFormulaRecordQuery query) {
+        Page<UserFormulaRecordEntity> page = new Page<>(query.getPageNumber(), query.getPageSize());
+        IPage<UserFormulaRecordVO> iPage = userFormulaRecordService.getUserFormulaRecord(page, query);
+
+        return ResponseEntity.ok(iPage);
     }
 
 

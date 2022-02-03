@@ -19,7 +19,6 @@ import java.util.Date;
 @Data
 @ApiModel("用户信息VO")
 public class UserVO extends BaseVO {
-    private Long id;
 
     @ApiModelProperty("用户名")
     private String username;
@@ -28,7 +27,7 @@ public class UserVO extends BaseVO {
     private String password;
 
     @ApiModelProperty("电话")
-    private Long phone;
+    private String phone;
 
     @ApiModelProperty("地址")
     private String address;
@@ -36,13 +35,6 @@ public class UserVO extends BaseVO {
     @ApiModelProperty("角色")
     private RoleEnum role;
 
-    @ApiModelProperty("角色")
-    protected Date createBy;
-    @ApiModelProperty("角色")
-    protected Date updateBy;
-    @ApiModelProperty("角色")
-    protected Date createDate;
-    @ApiModelProperty("角色")
-    protected Date updateDate;
+
 
 }

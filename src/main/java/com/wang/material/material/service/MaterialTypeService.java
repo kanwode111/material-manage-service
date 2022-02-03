@@ -1,5 +1,11 @@
 package com.wang.material.material.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wang.material.api.dto.MaterialQuery;
+import com.wang.material.api.dto.MaterialTypeQuery;
+import com.wang.material.api.vo.MaterialTypeVO;
+import com.wang.material.api.vo.MaterialVO;
+import com.wang.material.material.entity.MaterialEntity;
 import com.wang.material.material.entity.MaterialTypeEntity;
 
 /**
@@ -25,6 +31,12 @@ public interface MaterialTypeService {
      */
     Integer deleteMaterialType(MaterialTypeEntity materialType);
 
+    /**
+     * 分页查询所有原材料
+     * @param page
+     * @return
+     */
+    IPage<MaterialTypeVO> getMaterialTypes(IPage<MaterialTypeEntity> page, MaterialTypeQuery query);
 
 }
 

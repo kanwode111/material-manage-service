@@ -28,6 +28,9 @@ public class MaterialCreateDTO {
     @ApiModelProperty(value = "材料类型", name = "materialTypeId", dataType = "Long", required = true)
     private Long materialTypeId;
 
+    @ApiModelProperty(value = "材料类型名称", name = "materialTypeName", dataType = "String", required = true)
+    private String materialTypeName;
+
     @ApiModelProperty(value = "库存，以克为单位的库存", name = "materialStock", dataType = "Double", required = false)
     private Double materialStock;
 

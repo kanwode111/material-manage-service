@@ -18,7 +18,7 @@ import java.util.List;
 @ApiModel("配方添加")
 public class FormulaCreateDTO {
 
-    @ApiModelProperty(value = "用户Id", name = "id", dataType = "Long",  required = false)
+    @ApiModelProperty(value = "Id", name = "id", dataType = "Long",  required = false)
     private Long id;
 
     @ApiModelProperty(value = "配方名称", name = "formulaName", dataType = "String", required = true)

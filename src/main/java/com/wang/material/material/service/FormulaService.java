@@ -1,5 +1,12 @@
 package com.wang.material.material.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wang.material.api.dto.ElectronicBalanceQuery;
+import com.wang.material.api.dto.FormulaQuery;
+import com.wang.material.api.vo.ElectronicBalanceVO;
+import com.wang.material.api.vo.FormulaPartVO;
+import com.wang.material.api.vo.FormulaVO;
+import com.wang.material.material.entity.ElectronicBalanceEntity;
 import com.wang.material.material.entity.FormulaEntity;
 import com.wang.material.material.entity.MaterialEntity;
 
@@ -26,6 +33,14 @@ public interface FormulaService {
      * @return
      */
     Integer deleteFormula(FormulaEntity formula);
+
+    /**
+     * 查询配方
+     * @param page
+     * @return
+     */
+    IPage<FormulaVO> getFormulas(IPage<FormulaEntity> page, FormulaQuery query);
+
 
 }
 

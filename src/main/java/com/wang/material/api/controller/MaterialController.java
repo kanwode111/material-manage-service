@@ -1,7 +1,14 @@
 package com.wang.material.api.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wang.material.api.common.BaseOperationPlatformController;
+import com.wang.material.api.dto.FormulaQuery;
 import com.wang.material.api.dto.MaterialCreateDTO;
+import com.wang.material.api.dto.MaterialQuery;
+import com.wang.material.api.vo.FormulaVO;
+import com.wang.material.api.vo.MaterialVO;
+import com.wang.material.material.entity.FormulaEntity;
 import com.wang.material.material.entity.MaterialEntity;
 import com.wang.material.material.service.MaterialService;
 import io.swagger.annotations.Api;
@@ -58,5 +65,14 @@ public class MaterialController extends BaseOperationPlatformController {
         Integer result = materialService.deleteMaterial(material);
         // 校验原材料是否在配方中有使用，且配方为上线状态
         return ResponseEntity.ok(result);
+    }
+
+    @ApiOperation("查询配方")
+    @PostMapping("/getMaterials")
+    public ResponseEntity<IPage<MaterialVO>> getMaterials(@RequestBody @Valid MaterialQuery query) {
+        Page<MaterialEntity> page = new Page<>(query.getPageNumber(), query.getPageSize());
+        IPage<MaterialVO> iPage = materialService.getMaterials(page, query);
+
+        return ResponseEntity.ok(iPage);
     }
 }

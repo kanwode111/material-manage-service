@@ -21,7 +21,7 @@ public class UserEntity extends BaseEntity{
     private String password;
 
     @ApiModelProperty("电话")
-    private Long phone;
+    private Integer phone;
 
     @ApiModelProperty("地址")
     private String address;

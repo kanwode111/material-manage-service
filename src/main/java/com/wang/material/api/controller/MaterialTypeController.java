@@ -1,8 +1,15 @@
 package com.wang.material.api.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wang.material.api.common.BaseOperationPlatformController;
 import com.wang.material.api.dto.MaterialDeleteDTO;
+import com.wang.material.api.dto.MaterialQuery;
 import com.wang.material.api.dto.MaterialTypeCreateDTO;
+import com.wang.material.api.dto.MaterialTypeQuery;
+import com.wang.material.api.vo.MaterialTypeVO;
+import com.wang.material.api.vo.MaterialVO;
+import com.wang.material.material.entity.MaterialEntity;
 import com.wang.material.material.entity.MaterialTypeEntity;
 import com.wang.material.material.service.MaterialTypeService;
 import io.swagger.annotations.Api;
@@ -58,5 +65,14 @@ public class MaterialTypeController extends BaseOperationPlatformController {
         type.setUpdateBy(getOperator());
         type.setId(id);
         return ResponseEntity.ok(materialTypeService.deleteMaterialType(type));
+    }
+
+    @ApiOperation("查询配方类型")
+    @PostMapping("/getMaterialTypes")
+    public ResponseEntity<IPage<MaterialTypeVO>> getMaterialTypes(@RequestBody @Valid MaterialTypeQuery query) {
+        Page<MaterialTypeEntity> page = new Page<>(query.getPageNumber(), query.getPageSize());
+        IPage<MaterialTypeVO> iPage = materialTypeService.getMaterialTypes(page, query);
+
+        return ResponseEntity.ok(iPage);
     }
 }

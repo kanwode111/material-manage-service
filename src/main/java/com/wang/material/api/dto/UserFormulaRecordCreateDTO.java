@@ -23,6 +23,15 @@ public class UserFormulaRecordCreateDTO {
     @ApiModelProperty(value = "材料id", name = "materialId", dataType = "Long",  required = true)
     private Long materialId;
 
+    @ApiModelProperty(value = "配方Id", name = "formulaId", dataType = "String",  required = true)
+    private String formulaName;
+
+    @ApiModelProperty(value = "用户ID", name = "userId", dataType = "String",  required = true)
+    private String userName;
+
+    @ApiModelProperty(value = "材料id", name = "materialId", dataType = "String",  required = true)
+    private String materialName;
+
     @ApiModelProperty(value = "材料重量", name = "materialWeight", dataType = "Long",  required = true)
     private Long materialWeight;
 

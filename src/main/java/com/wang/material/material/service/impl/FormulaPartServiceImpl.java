@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,4 +55,20 @@ public class FormulaPartServiceImpl implements FormulaPartService {
         }
         return formulaPartMapper.deleteById(formulaPart.getId());
     }
+
+    @Override
+    public List<FormulaPartEntity> getFormulaPartByName(String name) {
+        QueryWrapper<FormulaPartEntity> query = new QueryWrapper<>();
+        query.like("formula_part_name", name);
+        return formulaPartMapper.selectList(query);
+    }
+
+    @Override
+    public List<FormulaPartEntity> getFormulaPartById(List<Long> ids) {
+        if(CollectionUtils.isEmpty(ids)) {
+            return new ArrayList<>();
+        }
+        return formulaPartMapper.selectBatchIds(ids);
+    }
+
 }

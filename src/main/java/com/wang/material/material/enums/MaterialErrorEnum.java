@@ -15,6 +15,7 @@ public enum MaterialErrorEnum  {
 	CANNOT_DELETE_MATERIAL_TYPE	("7000006", "不能删除原材料类型，原材料类型下面存在原材料"),
 	FORMULA_NAME_CODE_EXIST	("7000007", "配方名称已经存在"),
 	CANNOT_DELETE_FORMULA_PART	("7000008", "不能删除配方步骤，配方步骤下面含有配方"),
+	FORMULA_PART_NOT_EXIST	("7000009", "配方步骤不存在"),
 	;
 	private String errorCode;
 

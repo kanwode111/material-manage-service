@@ -1,6 +1,6 @@
-package com.wang.material.material.entity;
+package com.wang.material.api.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,8 +11,8 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-@TableName("material_info")
-public class MaterialEntity extends BaseEntity{
+@ApiModel("材料返回VO")
+public class MaterialVO  extends BaseVO {
     @ApiModelProperty("材料编码")
     private String materialCode;
 
@@ -21,9 +21,6 @@ public class MaterialEntity extends BaseEntity{
 
     @ApiModelProperty("材料类型")
     private Long materialTypeId;
-
-    @ApiModelProperty("材料类型名称")
-    private Long materialTypeName;
 
     @ApiModelProperty("库存，以克为单位的库存")
     private Double materialStock;

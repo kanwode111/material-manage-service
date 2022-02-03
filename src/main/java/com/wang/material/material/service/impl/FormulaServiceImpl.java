@@ -1,24 +1,33 @@
 package com.wang.material.material.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.wang.material.material.entity.FormulaDetailEntity;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wang.material.api.dto.FormulaQuery;
+import com.wang.material.api.vo.ElectronicBalanceVO;
+import com.wang.material.api.vo.FormulaPartVO;
+import com.wang.material.api.vo.FormulaVO;
 import com.wang.material.material.entity.FormulaEntity;
-import com.wang.material.material.entity.MaterialEntity;
+import com.wang.material.material.entity.FormulaPartEntity;
 import com.wang.material.material.enums.MaterialErrorEnum;
 import com.wang.material.material.mapper.FormulaDetailMapper;
 import com.wang.material.material.mapper.FormulaMapper;
-import com.wang.material.material.mapper.MaterialMapper;
+import com.wang.material.material.service.FormulaPartService;
 import com.wang.material.material.service.FormulaService;
-import com.wang.material.material.service.MaterialService;
 import com.wang.material.material.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FormulaServiceImpl implements FormulaService {
@@ -31,6 +40,9 @@ public class FormulaServiceImpl implements FormulaService {
 
     @Resource
     private FormulaMapper formulaMapper;
+
+    @Autowired
+    private FormulaPartService formulaPartService;
 
 
     @Override
@@ -65,7 +77,7 @@ public class FormulaServiceImpl implements FormulaService {
         QueryWrapper<FormulaEntity> query = new QueryWrapper<>();
         query.eq("formula_name", formula.getFormulaName());
         List<FormulaEntity> formulaEntities = formulaMapper.selectList(query);
-        if(!CollectionUtils.isEmpty(formulaEntities)) {
+        if (!CollectionUtils.isEmpty(formulaEntities)) {
             throw new RuntimeException(MaterialErrorEnum.FORMULA_NAME_CODE_EXIST.getErrorMessage());
         }
         formulaMapper.insert(formula);
@@ -74,7 +86,7 @@ public class FormulaServiceImpl implements FormulaService {
     }
 
     private void insertDetail(FormulaEntity formula) {
-        if(!CollectionUtils.isEmpty(formula.getDetailList()) ) {
+        if (!CollectionUtils.isEmpty(formula.getDetailList())) {
             formula.getDetailList().forEach(item -> {
                 item.setFormulaId(formula.getId());
                 item.setUpdateBy(formula.getUpdateBy());
@@ -82,7 +94,7 @@ public class FormulaServiceImpl implements FormulaService {
             });
             formulaDetailMapper.insertBatch(formula.getDetailList());
         }
-        if(!CollectionUtils.isEmpty(formula.getChildFormulas())) {
+        if (!CollectionUtils.isEmpty(formula.getChildFormulas())) {
             // 如果子配方不为空，子配方版本和父配方版本号保持一致
             formula.getChildFormulas().stream().forEach(item -> {
                 item.setVersion(formula.getVersion());
@@ -105,5 +117,56 @@ public class FormulaServiceImpl implements FormulaService {
         detailQuery.eq("formula_id", formula.getId());
         formulaDetailMapper.delete(detailQuery);
         return result;
+    }
+
+    @Override
+    public IPage<FormulaVO> getFormulas(IPage<FormulaEntity> page, FormulaQuery query) {
+        QueryWrapper<FormulaEntity> formulaQuery = new QueryWrapper<>();
+        if (query.getId() != null) {
+            formulaQuery.eq("id", query.getId());
+        }
+        if (query.getOnlineStatus() != null) {
+            formulaQuery.eq("online_status", query.getOnlineStatus());
+        }
+        if (!StringUtils.isEmpty(query.getFormulaStepName())) {
+            List<FormulaPartEntity> parts = formulaPartService.getFormulaPartByName(query.getFormulaName());
+            if (CollectionUtils.isEmpty(parts)) {
+                throw new RuntimeException(MaterialErrorEnum.FORMULA_PART_NOT_EXIST.getErrorMessage());
+            }
+            formulaQuery.in("formula_step_id", parts.stream().map(FormulaPartEntity::getId).collect(Collectors.toList()));
+        }
+        if (query.getParentId() != null) {
+            formulaQuery.eq("parent_id", query.getParentId());
+        }
+
+        List<FormulaVO> resultFormulas = new ArrayList<>();
+
+        //分页实体类转换
+        IPage<FormulaEntity> formulas = formulaMapper.selectPage(page, formulaQuery);
+        // 组装配方步骤的名称
+        List<Long> formulaPartIds = formulas.getRecords().stream().map(FormulaEntity::getFormulaPartId).collect(Collectors.toList());
+        List<FormulaPartEntity> formulaParts = formulaPartService.getFormulaPartById(formulaPartIds);
+        formulas.getRecords().forEach(formula -> {
+            FormulaVO u = new FormulaVO();
+            BeanUtils.copyProperties(formula, u);
+            if( !CollectionUtils.isEmpty(formulaParts)) {
+                Optional<FormulaPartEntity> optional = formulaParts.stream().filter(part -> part.getId().equals(formula.getFormulaPartId())).findFirst();
+                if(optional.isPresent()) {
+                    FormulaPartVO partVO = new FormulaPartVO();
+                    BeanUtils.copyProperties(optional.get(), partVO);
+                    u.setFormulaPart(partVO);
+                }
+            }
+
+            resultFormulas.add(u);
+        });
+
+
+        IPage<FormulaVO> resPage = new Page<>();
+        resPage.setTotal(formulas.getTotal());
+        resPage.setRecords(resultFormulas);
+        resPage.setSize(formulas.getSize());
+        resPage.setPages(formulas.getPages());
+        return resPage;
     }
 }

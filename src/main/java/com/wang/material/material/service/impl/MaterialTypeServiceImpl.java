@@ -1,18 +1,27 @@
 package com.wang.material.material.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wang.material.api.dto.MaterialTypeQuery;
+import com.wang.material.api.vo.MaterialTypeVO;
+import com.wang.material.api.vo.MaterialTypeVO;
 import com.wang.material.material.entity.MaterialEntity;
+import com.wang.material.material.entity.MaterialTypeEntity;
 import com.wang.material.material.entity.MaterialTypeEntity;
 import com.wang.material.material.enums.MaterialErrorEnum;
 import com.wang.material.material.mapper.MaterialMapper;
 import com.wang.material.material.mapper.MaterialTypeMapper;
 import com.wang.material.material.service.MaterialTypeService;
 import com.wang.material.material.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,6 +64,30 @@ public class MaterialTypeServiceImpl implements MaterialTypeService {
             throw new RuntimeException(MaterialErrorEnum.CANNOT_DELETE_MATERIAL_TYPE.getErrorMessage());
         }
 
+    }
+
+    @Override
+    public IPage<MaterialTypeVO> getMaterialTypes(IPage<MaterialTypeEntity> page, MaterialTypeQuery query) {
+        List<MaterialTypeVO> resultUsers = new ArrayList<>();
+        QueryWrapper<MaterialTypeEntity> userQuery = new QueryWrapper<>();
+        if(!StringUtils.isEmpty(query.getMaterialTypeName())) {
+            userQuery.like("material_type_name", query.getMaterialTypeName());
+        }
+
+
+        //分页实体类转换
+        IPage<MaterialTypeEntity> users = materialTypeMapper.selectPage(page, userQuery);
+        users.getRecords().forEach(user -> {
+            MaterialTypeVO u = new MaterialTypeVO();
+            BeanUtils.copyProperties(user, u);
+            resultUsers.add(u);
+        });
+        IPage<MaterialTypeVO> resPage = new Page<>();
+        resPage.setTotal(users.getTotal());
+        resPage.setRecords(resultUsers);
+        resPage.setSize(users.getSize());
+        resPage.setPages(users.getPages());
+        return resPage;
     }
 
 }

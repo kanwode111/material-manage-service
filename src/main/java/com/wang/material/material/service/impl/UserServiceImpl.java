@@ -3,6 +3,7 @@ package com.wang.material.material.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wang.material.api.dto.UserQuery;
 import com.wang.material.api.vo.UserVO;
 import com.wang.material.material.entity.UserEntity;
 import com.wang.material.material.enums.MaterialErrorEnum;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -42,10 +44,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public IPage<UserVO> getAllUsers(IPage<UserEntity> page) {
+    public IPage<UserVO> getAllUsers(IPage<UserEntity> page, UserQuery query) {
         List<UserVO> resultUsers = new ArrayList<>();
+        QueryWrapper<UserEntity> userQuery = new QueryWrapper<>();
+        if(!StringUtils.isEmpty(query.getUsername())) {
+            userQuery.like("username", query.getUsername());
+        }
+        if(!StringUtils.isEmpty(query.getAddress())) {
+            userQuery.like("address", query.getAddress());
+        }
+        if(query.getRole() != null) {
+            userQuery.eq("role", query.getRole());
+        }
+        if(!StringUtils.isEmpty(query.getPhone())) {
+            userQuery.like("phone", query.getPhone());
+        }
+
         //分页实体类转换
-        IPage<UserEntity> users = userMapper.selectPage(page, new QueryWrapper<UserEntity>());
+        IPage<UserEntity> users = userMapper.selectPage(page, userQuery);
         users.getRecords().forEach(user -> {
             UserVO u = new UserVO();
             BeanUtils.copyProperties(user, u);

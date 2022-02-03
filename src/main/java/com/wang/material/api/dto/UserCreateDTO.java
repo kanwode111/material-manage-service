@@ -27,9 +27,9 @@ public class UserCreateDTO  {
     @NotNull
     private String password;
 
-    @ApiModelProperty(value = "电话", name = "phone", dataType = "Long", required = true)
+    @ApiModelProperty(value = "电话", name = "phone", dataType = "String", required = true)
     @NotNull
-    private Long phone;
+    private String phone;
 
     @ApiModelProperty(value = "地址", name = "address", dataType = "String", required = true)
     @NotNull
